@@ -99,7 +99,7 @@ def resolve_credenciais(cliente, cfg):
             token = token or got.get("token")
             ig_user_id = ig_user_id or got.get("ig_user_id")
     return {"token": token, "ig_user_id": ig_user_id, "handle": handle,
-            "nome": nome, "canal_postiz": canal}
+            "nome": nome, "canal_postiz": canal, "graph_base": c.get("graph_base")}
 
 def puxar_credenciais_postiz(profile, cfg):
     """Consulta a tabela Integration do Postiz no Lenovo via SSH para extrair
@@ -276,10 +276,12 @@ def main():
     args = ap.parse_args()
 
     cfg = load_config()
-    global GRAPH
-    if cfg.get("graph_base"):
-        GRAPH = cfg["graph_base"].rstrip("/")
     cred = resolve_credenciais(args.cliente, cfg)
+    global GRAPH
+    # base por cliente > base global > default (graph.instagram.com)
+    base = cred.get("graph_base") or cfg.get("graph_base")
+    if base:
+        GRAPH = base.rstrip("/")
     if not (cred["token"] and cred["ig_user_id"]):
         log("ERRO: sem credenciais Instagram (token/ig_user_id). Configure config.json.")
         sys.exit(2)
