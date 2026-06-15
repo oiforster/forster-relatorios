@@ -7,13 +7,16 @@
 <meta name="description" content="Relatório de performance do Instagram de {{CLIENTE_NOME}} — {{MES_ANO}}. Gerado pela Forster.">
 <meta property="og:title" content="{{CLIENTE_NOME}} · {{MES_ANO}}">
 <meta property="og:description" content="Performance do mês no Instagram — por Forster.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --teal-50:#f0fdfa; --teal-300:#5eead4; --teal-400:#2dd4bf; --teal-500:#14b8a6;
-    --teal-600:#0d9488; --teal-700:#0f766e; --ink:#0b1220; --ink-2:#0f1a2b;
-    --paper:#f7f9fa; --muted:rgba(255,255,255,.62); --muted-2:rgba(255,255,255,.40);
+    --teal-300:#5eead4; --teal-400:#2dd4bf; --teal-500:#14b8a6;
+    --ink:#070b12; --muted:rgba(255,255,255,.66); --muted-2:rgba(255,255,255,.42);
     --radius:22px; --maxw:920px;
     --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --display:'Space Grotesk','Inter',sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -23,34 +26,35 @@
   }
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px;width:100%}
 
-  /* ---- secoes full-height ---- */
+  /* ---- secoes full-height (cada capitulo com sua cor + --accent) ---- */
   section{
     min-height:100svh; display:flex; flex-direction:column; justify-content:center;
     position:relative; padding:80px 0; overflow:hidden;
   }
-  .sec-cover   {background:radial-gradient(120% 90% at 50% 0%,#0f766e 0%,#0b1220 60%)}
-  .sec-resumo  {background:linear-gradient(160deg,#0b1220 0%,#10261f 100%)}
-  .sec-alcance {background:linear-gradient(160deg,#06231f 0%,#0b1220 100%)}
-  .sec-d1      {background:linear-gradient(155deg,#0d9488 0%,#0b1220 70%)}
-  .sec-d2      {background:linear-gradient(155deg,#0f766e 0%,#0b1220 70%)}
-  .sec-d3      {background:linear-gradient(155deg,#115e59 0%,#0b1220 70%)}
-  .sec-eng     {background:linear-gradient(160deg,#0b1220 0%,#10261f 100%)}
-  .sec-insight {background:radial-gradient(120% 100% at 50% 100%,#0f766e 0%,#0b1220 65%)}
-  .sec-footer  {background:#08101c; min-height:auto; padding:64px 0}
+  .sec-cover   {--accent:#5eead4; background:radial-gradient(120% 90% at 50% 0%,#0f766e 0%,#06231f 62%,#070b12 100%)}
+  .sec-resumo  {--accent:#a5b4fc; background:linear-gradient(165deg,#3730a3 0%,#1b1840 60%,#070b12 100%)}
+  .sec-alcance {--accent:#f9a8d4; background:linear-gradient(165deg,#9d174d 0%,#3d0f28 62%,#070b12 100%)}
+  .sec-d1      {--accent:#fcd34d; background:linear-gradient(160deg,#a16207 0%,#3a2a06 60%,#070b12 100%)}
+  .sec-d2      {--accent:#6ee7b7; background:linear-gradient(160deg,#047857 0%,#073a2c 60%,#070b12 100%)}
+  .sec-d3      {--accent:#c4b5fd; background:linear-gradient(160deg,#6d28d9 0%,#2a1556 60%,#070b12 100%)}
+  .sec-eng     {--accent:#93c5fd; background:linear-gradient(165deg,#1e40af 0%,#111c44 60%,#070b12 100%)}
+  .sec-insight {--accent:#5eead4; background:radial-gradient(120% 100% at 50% 100%,#0f766e 0%,#06231f 60%,#070b12 100%)}
+  .sec-footer  {--accent:#5eead4; background:#05080e; min-height:auto; padding:64px 0}
 
   /* ---- tipografia ---- */
   .eyebrow{
-    font-size:13px; letter-spacing:.18em; text-transform:uppercase;
-    color:var(--teal-300); font-weight:600; margin-bottom:18px;
+    font-size:13px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); font-weight:600; margin-bottom:18px;
   }
   .big-num{
-    font-weight:800; line-height:.92; letter-spacing:-.03em;
-    font-size:clamp(72px,18vw,200px);
-    background:linear-gradient(180deg,#fff 0%,var(--teal-300) 130%);
+    font-family:var(--display); font-weight:700; line-height:.9; letter-spacing:-.03em;
+    font-size:clamp(74px,18vw,205px);
+    background:linear-gradient(180deg,#fff 0%,var(--accent) 135%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 38px color-mix(in srgb,var(--accent) 42%,transparent));
   }
-  h1.cover-title{font-size:clamp(40px,8vw,86px);font-weight:800;letter-spacing:-.03em;line-height:1.02}
-  h2{font-size:clamp(28px,4.4vw,46px);font-weight:750;letter-spacing:-.02em;line-height:1.1}
+  h1.cover-title{font-family:var(--display);font-size:clamp(40px,8vw,88px);font-weight:700;letter-spacing:-.03em;line-height:1.02}
+  h2{font-family:var(--display);font-size:clamp(28px,4.4vw,46px);font-weight:600;letter-spacing:-.02em;line-height:1.1}
   .lede{font-size:clamp(18px,2.4vw,24px);color:var(--muted);max-width:30ch}
   .label{font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);font-weight:600}
 
@@ -59,73 +63,83 @@
   .wordmark{font-weight:800;letter-spacing:.32em;font-size:15px;color:#fff;opacity:.85;margin-bottom:46px}
   .wordmark b{color:var(--teal-400)}
   .cover-client{margin:10px 0 4px}
-  .cover-mes{font-size:clamp(18px,3vw,26px);color:var(--teal-300);font-weight:600;margin-top:18px;letter-spacing:.02em}
+  .cover-sub{font-size:clamp(15px,2vw,18px);color:var(--muted);margin-top:20px;max-width:26ch}
+  .cover-mes{font-size:clamp(18px,3vw,26px);color:var(--accent);font-weight:600;margin-top:10px;letter-spacing:.02em}
   .scroll-hint{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);color:var(--muted-2);font-size:12px;letter-spacing:.2em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:10px}
-  .scroll-hint .arrow{width:22px;height:22px;border-right:2px solid var(--teal-400);border-bottom:2px solid var(--teal-400);transform:rotate(45deg);animation:bob 1.6s infinite ease-in-out}
+  .scroll-hint .arrow{width:22px;height:22px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(45deg);animation:bob 1.6s infinite ease-in-out}
   @keyframes bob{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.4}50%{transform:rotate(45deg) translate(4px,4px);opacity:1}}
 
   /* ---- chips breakdown ---- */
   .chips{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
   .chip{
-    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
     border-radius:999px;padding:12px 20px;display:flex;align-items:baseline;gap:10px;
     backdrop-filter:blur(6px);
   }
-  .chip b{font-size:24px;font-weight:800;color:var(--teal-300)}
+  .chip b{font-family:var(--display);font-size:24px;font-weight:700;color:var(--accent)}
   .chip span{font-size:14px;color:var(--muted)}
 
-  /* ---- alcance: dois numeros ---- */
+  /* ---- alcance: dois numeros + comparacao ---- */
   .duo{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:14px}
   .duo .big-num{font-size:clamp(54px,11vw,118px)}
   @media(max-width:620px){.duo{grid-template-columns:1fr;gap:36px}}
+  .compare{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:38px}
+  .cmp-label{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);font-weight:600;margin-right:4px}
+  .cmp{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;font-size:15px;font-weight:600;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05)}
+  .cmp .ar{font-size:12px}
+  .cmp.up{color:#86efac;border-color:rgba(134,239,172,.35)}
+  .cmp.down{color:#fca5a5;border-color:rgba(252,165,165,.32)}
+  .cmp.flat{color:var(--muted)}
 
   /* ---- destaques ---- */
   .highlight{display:grid;grid-template-columns:300px 1fr;gap:42px;align-items:center}
   @media(max-width:740px){.highlight{grid-template-columns:1fr;gap:26px}}
   .thumb{
     position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:9/16;
-    background:#0a0f18;box-shadow:0 30px 80px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.08);
+    background:#0a0f18;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px color-mix(in srgb,var(--accent) 30%,transparent);
   }
   .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-  .thumb .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-  .thumb .play::after{content:"";width:0;height:0;border-left:26px solid #fff;border-top:16px solid transparent;border-bottom:16px solid transparent;filter:drop-shadow(0 2px 8px rgba(0,0,0,.6));margin-left:6px;opacity:.92}
+  .thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(7,11,18,.55) 100%);pointer-events:none}
+  .thumb .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2}
+  .thumb .play::after{content:"";width:0;height:0;border-left:26px solid #fff;border-top:16px solid transparent;border-bottom:16px solid transparent;filter:drop-shadow(0 2px 8px rgba(0,0,0,.6));margin-left:6px;opacity:.94}
   .metrics{display:grid;grid-template-columns:1fr 1fr;gap:20px 30px;margin:24px 0}
-  .metric .v{font-size:clamp(30px,5vw,42px);font-weight:800;letter-spacing:-.02em;color:#fff}
+  .metric .v{font-family:var(--display);font-size:clamp(30px,5vw,42px);font-weight:700;letter-spacing:-.02em;color:#fff}
   .metric .k{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);margin-top:2px}
   .analise{
-    border-left:3px solid var(--teal-500);padding:4px 0 4px 18px;margin-top:8px;
+    border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin-top:8px;
     color:var(--muted);font-size:clamp(16px,2.1vw,19px);max-width:46ch;
   }
   .analise b{color:#fff;font-weight:600}
   .post-link{
     display:inline-flex;align-items:center;gap:8px;margin-top:22px;
-    color:var(--teal-300);font-weight:600;text-decoration:none;font-size:15px;
+    color:var(--accent);font-weight:600;text-decoration:none;font-size:15px;
     border-bottom:1px solid transparent;transition:border-color .2s;
   }
-  .post-link:hover{border-color:var(--teal-300)}
-  .rank{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-400);font-weight:700;margin-bottom:14px}
+  .post-link:hover{border-color:var(--accent)}
+  .rank{display:inline-flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px}
+  .medal{width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:var(--display);font-size:13px;color:#070b12;background:var(--accent)}
 
   /* ---- engajamento: barras CSS ---- */
-  .eng-rate{display:flex;align-items:baseline;gap:16px;margin:6px 0 40px}
+  .eng-rate{display:flex;align-items:baseline;gap:16px;margin:6px 0 12px}
   .eng-rate .big-num{font-size:clamp(56px,12vw,130px)}
-  .eng-rate small{font-size:clamp(22px,4vw,40px);color:var(--teal-300);font-weight:700}
+  .eng-rate small{font-family:var(--display);font-size:clamp(22px,4vw,40px);color:var(--accent);font-weight:600}
+  .eng-gloss{color:var(--muted);font-size:clamp(15px,2vw,18px);margin-bottom:34px}
   .bars{display:flex;flex-direction:column;gap:22px;margin-top:10px}
   .bar-row{display:grid;grid-template-columns:120px 1fr 64px;align-items:center;gap:18px}
   .bar-row .bk{font-size:14px;color:var(--muted);font-weight:600}
-  .bar-track{height:16px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden}
-  .bar-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--teal-600),var(--teal-300))}
-  .bar-row .bv{font-size:14px;color:#fff;font-weight:700;text-align:right}
+  .bar-track{height:16px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}
+  .bar-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 55%,#0b1220),var(--accent))}
+  .bar-row .bv{font-family:var(--display);font-size:14px;color:#fff;font-weight:600;text-align:right}
   @media(max-width:620px){.bar-row{grid-template-columns:84px 1fr 50px;gap:12px}}
 
   /* ---- insight ---- */
-  .insight-body{font-size:clamp(20px,3vw,30px);font-weight:500;line-height:1.42;max-width:24ch;color:#fff}
-  .insight-body .hl{color:var(--teal-300)}
+  .insight-body{font-family:var(--display);font-size:clamp(20px,3vw,30px);font-weight:500;line-height:1.42;max-width:24ch;color:#fff}
 
   /* ---- rodape ---- */
   .sec-footer .wrap{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
   .footer-mark{font-weight:800;letter-spacing:.3em;font-size:13px}
   .footer-mark b{color:var(--teal-400)}
-  .footer-link{color:var(--teal-300);text-decoration:none;font-weight:600}
+  .footer-link{color:var(--accent);text-decoration:none;font-weight:600}
   .footer-meta{color:var(--muted-2);font-size:13px}
 
   /* ---- animacao base (revelada via GSAP) ---- */
@@ -133,7 +147,7 @@
   .no-anim .reveal{opacity:1;transform:none}
 
   /* progress bar topo */
-  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--teal-500),var(--teal-300));z-index:50}
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:#5eead4;z-index:50}
 </style>
 </head>
 <body>
@@ -146,6 +160,7 @@
     <div class="eyebrow reveal">Relatório de performance</div>
     <h1 class="cover-title cover-client reveal">{{CLIENTE_NOME}}</h1>
     <div class="cover-mes reveal">{{MES_ANO}}</div>
+    <div class="cover-sub reveal">O seu mês no Instagram, em números.</div>
   </div>
   <div class="scroll-hint"><span>role para começar</span><span class="arrow"></span></div>
 </section>
@@ -154,9 +169,9 @@
 <section class="sec-resumo">
   <div class="wrap">
     <div class="eyebrow reveal">No mês de {{MES_ANO}}</div>
-    <h2 class="reveal">Você publicou</h2>
+    <h2 class="reveal">Você levou ao ar</h2>
     <div class="big-num reveal count" data-count="{{TOTAL_POSTS}}">0</div>
-    <h2 class="reveal">publicações no Instagram</h2>
+    <h2 class="reveal">conteúdos no Instagram</h2>
     <div class="chips reveal">
       <div class="chip"><b class="count" data-count="{{N_REELS}}">0</b><span>Reels</span></div>
       <div class="chip"><b class="count" data-count="{{N_CARDS}}">0</b><span>Cards</span></div>
@@ -173,7 +188,7 @@
     <div class="duo">
       <div class="reveal">
         <div class="big-num count" data-count="{{REACH_TOTAL}}">0</div>
-        <div class="label">contas alcançadas</div>
+        <div class="label">pessoas alcançadas</div>
       </div>
       <div class="reveal">
         <div class="big-num count" data-count="{{VIEWS_TOTAL}}">0</div>
@@ -189,7 +204,7 @@
   <div class="wrap highlight">
     <div class="thumb reveal">{{D1_THUMB}}</div>
     <div>
-      <div class="rank reveal">Destaque #1 · Mais visto</div>
+      <div class="rank reveal"><span class="medal">1</span> Mais visto</div>
       <h2 class="reveal">{{D1_TITULO}}</h2>
       <div class="metrics">
         <div class="metric reveal"><div class="v count" data-count="{{D1_VIEWS}}">0</div><div class="k">Views</div></div>
@@ -208,7 +223,7 @@
   <div class="wrap highlight">
     <div class="thumb reveal">{{D2_THUMB}}</div>
     <div>
-      <div class="rank reveal">Destaque #2 · Mais engajamento</div>
+      <div class="rank reveal"><span class="medal">2</span> Mais engajamento</div>
       <h2 class="reveal">{{D2_TITULO}}</h2>
       <div class="metrics">
         <div class="metric reveal"><div class="v count" data-count="{{D2_LIKES}}">0</div><div class="k">Curtidas</div></div>
@@ -227,7 +242,7 @@
   <div class="wrap highlight">
     <div class="thumb reveal">{{D3_THUMB}}</div>
     <div>
-      <div class="rank reveal">Destaque #3 · Maior alcance</div>
+      <div class="rank reveal"><span class="medal">3</span> Maior alcance</div>
       <h2 class="reveal">{{D3_TITULO}}</h2>
       <div class="metrics">
         <div class="metric reveal"><div class="v count" data-count="{{D3_REACH}}">0</div><div class="k">Alcance</div></div>
@@ -250,6 +265,7 @@
       <span class="big-num count" data-count="{{TAXA_ENGAJAMENTO}}" data-decimals="1">0</span>
       <small>%</small>
     </div>
+    <div class="eng-gloss reveal">De cada 100 pessoas alcançadas, cerca de {{ENG_POR_100}} interagiram.</div>
     <div class="label reveal">Distribuição de alcance por formato</div>
     <div class="bars reveal">
 {{BARS}}
@@ -269,7 +285,7 @@
 <footer class="sec-footer">
   <div class="wrap">
     <div class="footer-mark">FOR<b>STER</b></div>
-    <div class="footer-meta">Relatório gerado automaticamente · {{MES_ANO}}</div>
+    <div class="footer-meta">Feito com cuidado pela Forster · {{MES_ANO}}</div>
     <a class="footer-link" href="{{INSTAGRAM_URL}}" target="_blank" rel="noopener">@{{INSTAGRAM_HANDLE}} no Instagram →</a>
   </div>
 </footer>
@@ -282,20 +298,15 @@
   if(!hasGSAP){ document.body.classList.add('no-anim'); animateBarsFallback(); return; }
   gsap.registerPlugin(ScrollTrigger);
 
-  // progress bar
   gsap.to("#progress",{width:"100%",ease:"none",scrollTrigger:{trigger:"body",start:"top top",end:"bottom bottom",scrub:.3}});
 
-  // reveal por secao (stagger dos elementos .reveal dentro de cada section)
   gsap.utils.toArray("section, footer").forEach(function(sec){
     var items = sec.querySelectorAll(".reveal");
     if(!items.length) return;
-    gsap.to(items,{
-      opacity:1, y:0, duration:.8, ease:"power3.out", stagger:.09,
-      scrollTrigger:{trigger:sec, start:"top 72%"}
-    });
+    gsap.to(items,{opacity:1,y:0,duration:.8,ease:"power3.out",stagger:.09,
+      scrollTrigger:{trigger:sec, start:"top 72%"}});
   });
 
-  // countup
   gsap.utils.toArray(".count").forEach(function(el){
     var target=parseFloat(el.getAttribute("data-count"))||0;
     var dec=parseInt(el.getAttribute("data-decimals")||"0",10);
@@ -307,7 +318,6 @@
     }});
   });
 
-  // barras
   gsap.utils.toArray(".bar-fill").forEach(function(el){
     var w=parseFloat(el.getAttribute("data-w"))||0;
     ScrollTrigger.create({trigger:el,start:"top 88%",once:true,onEnter:function(){

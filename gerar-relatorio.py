@@ -247,6 +247,55 @@ def thumb_html(rel, alt, is_reel):
     play = '<div class="play"></div>' if is_reel else ""
     return f'<img src="{rel}" alt="{alt}" loading="lazy">{play}'
 
+def _totais_dados(path):
+    try:
+        d = json.loads(Path(path).read_text())
+    except Exception:
+        return None
+    posts = d.get("posts", [])
+    if not posts:
+        return None
+    reach = sum(int(p.get("reach", 0) or 0) for p in posts)
+    views = sum(int(p.get("views", 0) or 0) for p in posts if p.get("tipo") == "reel")
+    taxas = []
+    for p in posts:
+        r = int(p.get("reach", 0) or 0)
+        m = p.get("metrics", {})
+        eng = sum(int(m.get(k, 0) or 0) for k in ("likes", "comments", "shares", "saved"))
+        if r:
+            taxas.append(eng / r * 100)
+    taxa = round(sum(taxas) / len(taxas), 1) if taxas else 0.0
+    return {"reach": reach, "views": views, "taxa": taxa}
+
+def comparar_mes_anterior(slug, mes, meses_list, cur_reach, cur_views, cur_taxa):
+    """Monta o bloco de comparação com o mês anterior, se houver dados.json dele."""
+    y, m = map(int, mes.split("-"))
+    pm, py = (12, y - 1) if m == 1 else (m - 1, y)
+    prev_t = _totais_dados(ROOT / slug / f"{py:04d}-{pm:02d}" / "dados.json")
+    if not prev_t:
+        return ""
+    chips = []
+    def pct_chip(label, cur, prev):
+        if prev <= 0:
+            return
+        d = (cur - prev) / prev * 100
+        cls = "up" if d > 0.5 else ("down" if d < -0.5 else "flat")
+        ar = "&#9650;" if d > 0.5 else ("&#9660;" if d < -0.5 else "&#8211;")
+        chips.append(f'<span class="cmp {cls}"><span class="ar">{ar}</span> {d:+.0f}% {label}</span>')
+    def pt_chip(label, cur, prev):
+        d = cur - prev
+        cls = "up" if d > 0.05 else ("down" if d < -0.05 else "flat")
+        ar = "&#9650;" if d > 0.05 else ("&#9660;" if d < -0.05 else "&#8211;")
+        val = f"{d:+.1f}".replace(".", ",")
+        chips.append(f'<span class="cmp {cls}"><span class="ar">{ar}</span> {val}pt {label}</span>')
+    pct_chip("alcance", cur_reach, prev_t["reach"])
+    pct_chip("views", cur_views, prev_t["views"])
+    pt_chip("engajamento", cur_taxa, prev_t["taxa"])
+    if not chips:
+        return ""
+    return ('<div class="compare reveal"><span class="cmp-label">vs. '
+            + meses_list[pm] + '</span>' + "".join(chips) + "</div>")
+
 def render(ctx):
     html = TEMPLATE.read_text()
     for k, v in ctx.items():
@@ -378,7 +427,11 @@ def main():
     analises = gerar_analises(nome, mes_label, destaques, resumo, usar_ia=not args.no_ia)
 
     g = lambda d, k, default=0: (d["metrics"].get(k, default) if d else default)
-    bloco_comp = ""  # comparacao mes anterior — preenchida quando houver snapshot
+    eng_por_100 = max(1, round(taxa)) if taxa else 0
+
+    # comparacao com o mes anterior (se houver snapshot dados.json)
+    bloco_comp = comparar_mes_anterior(slug, args.mes, MESES,
+                                       reach_total, views_total, taxa)
 
     ctx = {
         "CLIENTE_NOME": nome, "MES_ANO": mes_label,
@@ -403,7 +456,7 @@ def main():
         "D3_COMMENTS": g(d3, "comments"), "D3_SAVED": g(d3, "saved"),
         "D3_LINK": d3["permalink"] if d3 else "#", "D3_ANALISE": analises.get("D3", ""),
         # engajamento
-        "TAXA_ENGAJAMENTO": taxa,
+        "TAXA_ENGAJAMENTO": taxa, "ENG_POR_100": eng_por_100,
         "BARS": bars_html,
         # insight + rodape
         "INSIGHT_MES": analises.get("insight", ""),
