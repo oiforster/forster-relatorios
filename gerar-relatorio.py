@@ -325,11 +325,21 @@ def main():
     reach_total = sum(r["reach"] for r in registros)
     views_total = sum(r["views"] for r in registros if r["tipo"] == "reel")
 
-    # destaques
+    # destaques — escolhe posts DISTINTOS quando há volume suficiente;
+    # com poucos posts, evita repetição e deixa a seção faltante ser removida.
     reels = [r for r in registros if r["tipo"] == "reel"]
-    d1 = max(reels, key=lambda r: r["views"], default=None) or (registros[0] if registros else None)
-    d2 = max(registros, key=lambda r: r["eng"], default=None)
-    d3 = max(registros, key=lambda r: r["reach"], default=None)
+    criterios = {
+        "D1": sorted(reels or registros, key=lambda r: r["views"], reverse=True),
+        "D2": sorted(registros, key=lambda r: r["eng"], reverse=True),
+        "D3": sorted(registros, key=lambda r: r["reach"], reverse=True),
+    }
+    usados, escolha = set(), {}
+    for rank in ("D1", "D2", "D3"):
+        pick = next((r for r in criterios[rank] if r["id"] not in usados), None)
+        if pick:
+            usados.add(pick["id"])
+        escolha[rank] = pick
+    d1, d2, d3 = escolha["D1"], escolha["D2"], escolha["D3"]
 
     # taxa engajamento media = eng / reach
     taxas = [(r["eng"] / r["reach"] * 100) for r in registros if r["reach"]]
@@ -390,8 +400,13 @@ def main():
     }
 
     html = render(ctx)
+    # remove seções de destaque sem post (ex.: mês com poucas publicações)
+    for rank, d in (("d1", d1), ("d2", d2), ("d3", d3)):
+        if d is None:
+            html = re.sub(rf'<section class="sec-{rank}">.*?</section>\s*',
+                          "", html, flags=re.S)
     (destdir / "index.html").write_text(html)
-    log(f"Relatório gerado: {destdir/'index.html'}")
+    log(f"Relatório gerado: {destdir/'index.html'} ({sum(x is not None for x in (d1,d2,d3))} destaques)")
 
     if not args.no_publish:
         publicar(slug, args.mes)

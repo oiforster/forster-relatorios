@@ -5,3 +5,5 @@ build.log
 dados_cache/
 _preview.html
 config.json
+puxar-token.sh
+configurar-clientes.sh
