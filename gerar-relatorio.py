@@ -322,6 +322,8 @@ def main():
     ap.add_argument("--mes", required=True, help="YYYY-MM")
     ap.add_argument("--no-publish", action="store_true")
     ap.add_argument("--no-ia", action="store_true")
+    ap.add_argument("--rerender", action="store_true",
+                    help="re-renderiza do cache (dados.json + analises.json), sem API/IA")
     args = ap.parse_args()
 
     cfg = load_config()
@@ -331,7 +333,7 @@ def main():
     base = cred.get("graph_base") or cfg.get("graph_base")
     if base:
         GRAPH = base.rstrip("/")
-    if not (cred["token"] and cred["ig_user_id"]):
+    if not args.rerender and not (cred["token"] and cred["ig_user_id"]):
         log("ERRO: sem credenciais Instagram (token/ig_user_id). Configure config.json.")
         sys.exit(2)
 
@@ -346,26 +348,33 @@ def main():
     imgdir = destdir / "img"
     destdir.mkdir(parents=True, exist_ok=True)
 
-    # 1-3. coleta
-    posts = listar_midia(cred, args.mes)
-    registros = []
-    for p in posts:
-        tipo = classificar(p)
-        ins = buscar_insights(p["id"], tipo, cred["token"])
-        thumb = cache_thumb(p, imgdir)
-        eng = sum(int(ins.get(k, 0) or 0) for k in ("likes", "comments", "shares", "saved"))
-        registros.append({
-            "id": p["id"], "tipo": tipo, "permalink": p.get("permalink", "#"),
-            "caption": (p.get("caption") or "").strip(), "thumb": thumb,
-            "timestamp": p.get("timestamp", ""), "metrics": ins,
-            "views": int(ins.get("views", 0) or 0),
-            "reach": int(ins.get("reach", 0) or 0),
-            "eng": eng,
-        })
-
-    # salva dados crus
-    (destdir / "dados.json").write_text(json.dumps(
-        {"cliente": nome, "mes": args.mes, "posts": registros}, ensure_ascii=False, indent=2))
+    # 1-3. coleta (ou cache, no modo --rerender)
+    if args.rerender:
+        cache = destdir / "dados.json"
+        if not cache.exists():
+            log(f"ERRO: --rerender sem cache em {cache}. Rode uma vez sem --rerender.")
+            sys.exit(2)
+        registros = json.loads(cache.read_text()).get("posts", [])
+        log(f"--rerender: {len(registros)} posts do cache (sem API/IA).")
+    else:
+        posts = listar_midia(cred, args.mes)
+        registros = []
+        for p in posts:
+            tipo = classificar(p)
+            ins = buscar_insights(p["id"], tipo, cred["token"])
+            thumb = cache_thumb(p, imgdir)
+            eng = sum(int(ins.get(k, 0) or 0) for k in ("likes", "comments", "shares", "saved"))
+            registros.append({
+                "id": p["id"], "tipo": tipo, "permalink": p.get("permalink", "#"),
+                "caption": (p.get("caption") or "").strip(), "thumb": thumb,
+                "timestamp": p.get("timestamp", ""), "metrics": ins,
+                "views": int(ins.get("views", 0) or 0),
+                "reach": int(ins.get("reach", 0) or 0),
+                "eng": eng,
+            })
+        # salva dados crus
+        (destdir / "dados.json").write_text(json.dumps(
+            {"cliente": nome, "mes": args.mes, "posts": registros}, ensure_ascii=False, indent=2))
 
     if not registros:
         log("AVISO: nenhum post coletado. Verifique credenciais/período.")
@@ -413,6 +422,10 @@ def main():
             f'<div class="bar-track"><div class="bar-fill" data-w="{p}"></div></div>'
             f'<span class="bv">{p}%</span></div>')
     bars_html = "\n".join(bar_rows)
+    # chips do resumo — só formatos com posts no mês
+    chips_html = "\n".join(
+        f'      <div class="chip"><b class="count" data-count="{n}">0</b><span>{label}</span></div>'
+        for label, n in (("Reels", n_reel), ("Cards", n_card), ("Carrosséis", n_carr)) if n > 0)
 
     # IA
     def mk(d, rank, rank_label):
@@ -424,7 +437,19 @@ def main():
     resumo = {"total": len(registros), "reels": n_reel, "cards": n_card,
               "carrosseis": n_carr, "reach_total": reach_total,
               "views_total": views_total, "taxa_engajamento": taxa}
-    analises = gerar_analises(nome, mes_label, destaques, resumo, usar_ia=not args.no_ia)
+    analises_cache = destdir / "analises.json"
+    if args.rerender:
+        try:
+            analises = json.loads(analises_cache.read_text())
+        except Exception:
+            analises = {}
+        log(f"--rerender: análises do cache ({len(analises)} itens).")
+    else:
+        analises = gerar_analises(nome, mes_label, destaques, resumo, usar_ia=not args.no_ia)
+        try:
+            analises_cache.write_text(json.dumps(analises, ensure_ascii=False, indent=2))
+        except Exception:
+            pass
 
     g = lambda d, k, default=0: (d["metrics"].get(k, default) if d else default)
     eng_por_100 = max(1, round(taxa)) if taxa else 0
@@ -435,7 +460,7 @@ def main():
 
     ctx = {
         "CLIENTE_NOME": nome, "MES_ANO": mes_label,
-        "TOTAL_POSTS": len(registros), "N_REELS": n_reel, "N_CARDS": n_card, "N_CARROSSEIS": n_carr,
+        "TOTAL_POSTS": len(registros), "CHIPS": chips_html,
         "REACH_TOTAL": reach_total, "VIEWS_TOTAL": views_total, "BLOCO_COMPARACAO": bloco_comp,
         # D1
         "D1_THUMB": thumb_html(d1["thumb"] if d1 else None, "Destaque 1", True),
