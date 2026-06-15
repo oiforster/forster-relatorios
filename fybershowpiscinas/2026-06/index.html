@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fyber Show Piscinas · Junho 2026 · Relatório Forster</title>
+<meta name="description" content="Relatório de performance do Instagram de Fyber Show Piscinas — Junho 2026. Gerado pela Forster.">
+<meta property="og:title" content="Fyber Show Piscinas · Junho 2026">
+<meta property="og:description" content="Performance do mês no Instagram — por Forster.">
+<style>
+  :root{
+    --teal-50:#f0fdfa; --teal-300:#5eead4; --teal-400:#2dd4bf; --teal-500:#14b8a6;
+    --teal-600:#0d9488; --teal-700:#0f766e; --ink:#0b1220; --ink-2:#0f1a2b;
+    --paper:#f7f9fa; --muted:rgba(255,255,255,.62); --muted-2:rgba(255,255,255,.40);
+    --radius:22px; --maxw:920px;
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--font); background:var(--ink); color:#fff;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden; line-height:1.5;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px;width:100%}
+
+  /* ---- secoes full-height ---- */
+  section{
+    min-height:100svh; display:flex; flex-direction:column; justify-content:center;
+    position:relative; padding:80px 0; overflow:hidden;
+  }
+  .sec-cover   {background:radial-gradient(120% 90% at 50% 0%,#0f766e 0%,#0b1220 60%)}
+  .sec-resumo  {background:linear-gradient(160deg,#0b1220 0%,#10261f 100%)}
+  .sec-alcance {background:linear-gradient(160deg,#06231f 0%,#0b1220 100%)}
+  .sec-d1      {background:linear-gradient(155deg,#0d9488 0%,#0b1220 70%)}
+  .sec-d2      {background:linear-gradient(155deg,#0f766e 0%,#0b1220 70%)}
+  .sec-d3      {background:linear-gradient(155deg,#115e59 0%,#0b1220 70%)}
+  .sec-eng     {background:linear-gradient(160deg,#0b1220 0%,#10261f 100%)}
+  .sec-insight {background:radial-gradient(120% 100% at 50% 100%,#0f766e 0%,#0b1220 65%)}
+  .sec-footer  {background:#08101c; min-height:auto; padding:64px 0}
+
+  /* ---- tipografia ---- */
+  .eyebrow{
+    font-size:13px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--teal-300); font-weight:600; margin-bottom:18px;
+  }
+  .big-num{
+    font-weight:800; line-height:.92; letter-spacing:-.03em;
+    font-size:clamp(72px,18vw,200px);
+    background:linear-gradient(180deg,#fff 0%,var(--teal-300) 130%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  h1.cover-title{font-size:clamp(40px,8vw,86px);font-weight:800;letter-spacing:-.03em;line-height:1.02}
+  h2{font-size:clamp(28px,4.4vw,46px);font-weight:750;letter-spacing:-.02em;line-height:1.1}
+  .lede{font-size:clamp(18px,2.4vw,24px);color:var(--muted);max-width:30ch}
+  .label{font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);font-weight:600}
+
+  /* ---- capa ---- */
+  .sec-cover .wrap{text-align:center;display:flex;flex-direction:column;align-items:center}
+  .wordmark{font-weight:800;letter-spacing:.32em;font-size:15px;color:#fff;opacity:.85;margin-bottom:46px}
+  .wordmark b{color:var(--teal-400)}
+  .cover-client{margin:10px 0 4px}
+  .cover-mes{font-size:clamp(18px,3vw,26px);color:var(--teal-300);font-weight:600;margin-top:18px;letter-spacing:.02em}
+  .scroll-hint{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);color:var(--muted-2);font-size:12px;letter-spacing:.2em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .scroll-hint .arrow{width:22px;height:22px;border-right:2px solid var(--teal-400);border-bottom:2px solid var(--teal-400);transform:rotate(45deg);animation:bob 1.6s infinite ease-in-out}
+  @keyframes bob{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.4}50%{transform:rotate(45deg) translate(4px,4px);opacity:1}}
+
+  /* ---- chips breakdown ---- */
+  .chips{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+  .chip{
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+    border-radius:999px;padding:12px 20px;display:flex;align-items:baseline;gap:10px;
+    backdrop-filter:blur(6px);
+  }
+  .chip b{font-size:24px;font-weight:800;color:var(--teal-300)}
+  .chip span{font-size:14px;color:var(--muted)}
+
+  /* ---- alcance: dois numeros ---- */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:14px}
+  .duo .big-num{font-size:clamp(54px,11vw,118px)}
+  @media(max-width:620px){.duo{grid-template-columns:1fr;gap:36px}}
+
+  /* ---- destaques ---- */
+  .highlight{display:grid;grid-template-columns:300px 1fr;gap:42px;align-items:center}
+  @media(max-width:740px){.highlight{grid-template-columns:1fr;gap:26px}}
+  .thumb{
+    position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:9/16;
+    background:#0a0f18;box-shadow:0 30px 80px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.08);
+  }
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumb .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .thumb .play::after{content:"";width:0;height:0;border-left:26px solid #fff;border-top:16px solid transparent;border-bottom:16px solid transparent;filter:drop-shadow(0 2px 8px rgba(0,0,0,.6));margin-left:6px;opacity:.92}
+  .metrics{display:grid;grid-template-columns:1fr 1fr;gap:20px 30px;margin:24px 0}
+  .metric .v{font-size:clamp(30px,5vw,42px);font-weight:800;letter-spacing:-.02em;color:#fff}
+  .metric .k{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);margin-top:2px}
+  .analise{
+    border-left:3px solid var(--teal-500);padding:4px 0 4px 18px;margin-top:8px;
+    color:var(--muted);font-size:clamp(16px,2.1vw,19px);max-width:46ch;
+  }
+  .analise b{color:#fff;font-weight:600}
+  .post-link{
+    display:inline-flex;align-items:center;gap:8px;margin-top:22px;
+    color:var(--teal-300);font-weight:600;text-decoration:none;font-size:15px;
+    border-bottom:1px solid transparent;transition:border-color .2s;
+  }
+  .post-link:hover{border-color:var(--teal-300)}
+  .rank{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-400);font-weight:700;margin-bottom:14px}
+
+  /* ---- engajamento: barras CSS ---- */
+  .eng-rate{display:flex;align-items:baseline;gap:16px;margin:6px 0 40px}
+  .eng-rate .big-num{font-size:clamp(56px,12vw,130px)}
+  .eng-rate small{font-size:clamp(22px,4vw,40px);color:var(--teal-300);font-weight:700}
+  .bars{display:flex;flex-direction:column;gap:22px;margin-top:10px}
+  .bar-row{display:grid;grid-template-columns:120px 1fr 64px;align-items:center;gap:18px}
+  .bar-row .bk{font-size:14px;color:var(--muted);font-weight:600}
+  .bar-track{height:16px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden}
+  .bar-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--teal-600),var(--teal-300))}
+  .bar-row .bv{font-size:14px;color:#fff;font-weight:700;text-align:right}
+  @media(max-width:620px){.bar-row{grid-template-columns:84px 1fr 50px;gap:12px}}
+
+  /* ---- insight ---- */
+  .insight-body{font-size:clamp(20px,3vw,30px);font-weight:500;line-height:1.42;max-width:24ch;color:#fff}
+  .insight-body .hl{color:var(--teal-300)}
+
+  /* ---- rodape ---- */
+  .sec-footer .wrap{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+  .footer-mark{font-weight:800;letter-spacing:.3em;font-size:13px}
+  .footer-mark b{color:var(--teal-400)}
+  .footer-link{color:var(--teal-300);text-decoration:none;font-weight:600}
+  .footer-meta{color:var(--muted-2);font-size:13px}
+
+  /* ---- animacao base (revelada via GSAP) ---- */
+  .reveal{opacity:0;transform:translateY(28px)}
+  .no-anim .reveal{opacity:1;transform:none}
+
+  /* progress bar topo */
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--teal-500),var(--teal-300));z-index:50}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<!-- 1. CAPA -->
+<section class="sec-cover">
+  <div class="wrap">
+    <div class="wordmark reveal">FOR<b>STER</b></div>
+    <div class="eyebrow reveal">Relatório de performance</div>
+    <h1 class="cover-title cover-client reveal">Fyber Show Piscinas</h1>
+    <div class="cover-mes reveal">Junho 2026</div>
+  </div>
+  <div class="scroll-hint"><span>role para começar</span><span class="arrow"></span></div>
+</section>
+
+<!-- 2. RESUMO -->
+<section class="sec-resumo">
+  <div class="wrap">
+    <div class="eyebrow reveal">No mês de Junho 2026</div>
+    <h2 class="reveal">Você publicou</h2>
+    <div class="big-num reveal count" data-count="7">0</div>
+    <h2 class="reveal">publicações no Instagram</h2>
+    <div class="chips reveal">
+      <div class="chip"><b class="count" data-count="4">0</b><span>Reels</span></div>
+      <div class="chip"><b class="count" data-count="3">0</b><span>Cards</span></div>
+      <div class="chip"><b class="count" data-count="0">0</b><span>Carrosséis</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. ALCANCE -->
+<section class="sec-alcance">
+  <div class="wrap">
+    <div class="eyebrow reveal">Alcance no mês</div>
+    <h2 class="reveal">Seu conteúdo chegou longe</h2>
+    <div class="duo">
+      <div class="reveal">
+        <div class="big-num count" data-count="5916">0</div>
+        <div class="label">contas alcançadas</div>
+      </div>
+      <div class="reveal">
+        <div class="big-num count" data-count="7634">0</div>
+        <div class="label">visualizações em Reels</div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- 4. DESTAQUE 1 -->
+<section class="sec-d1">
+  <div class="wrap highlight">
+    <div class="thumb reveal"><img src="img/18058385411721490.jpg" alt="Destaque 1" loading="lazy"><div class="play"></div></div>
+    <div>
+      <div class="rank reveal">Destaque #1 · Mais visto</div>
+      <h2 class="reveal">O Reel mais visto do mês</h2>
+      <div class="metrics">
+        <div class="metric reveal"><div class="v count" data-count="2667">0</div><div class="k">Views</div></div>
+        <div class="metric reveal"><div class="v count" data-count="1709">0</div><div class="k">Alcance</div></div>
+        <div class="metric reveal"><div class="v count" data-count="142">0</div><div class="k">Curtidas</div></div>
+        <div class="metric reveal"><div class="v">24,4s</div><div class="k">Tempo médio</div></div>
+      </div>
+      <p class="analise reveal"></p>
+      <a class="post-link reveal" href="https://www.instagram.com/reel/DZZyZb0h3Jw/" target="_blank" rel="noopener">Ver no Instagram →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 5. DESTAQUE 2 -->
+<section class="sec-d2">
+  <div class="wrap highlight">
+    <div class="thumb reveal"><img src="img/18352443742210367.jpg" alt="Destaque 2" loading="lazy"><div class="play"></div></div>
+    <div>
+      <div class="rank reveal">Destaque #2 · Mais engajamento</div>
+      <h2 class="reveal">O post que mais engajou</h2>
+      <div class="metrics">
+        <div class="metric reveal"><div class="v count" data-count="143">0</div><div class="k">Curtidas</div></div>
+        <div class="metric reveal"><div class="v count" data-count="11">0</div><div class="k">Comentários</div></div>
+        <div class="metric reveal"><div class="v count" data-count="9">0</div><div class="k">Compart.</div></div>
+        <div class="metric reveal"><div class="v count" data-count="3">0</div><div class="k">Salvos</div></div>
+      </div>
+      <p class="analise reveal"></p>
+      <a class="post-link reveal" href="https://www.instagram.com/reel/DZM6UljByxj/" target="_blank" rel="noopener">Ver no Instagram →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 6. DESTAQUE 3 -->
+<section class="sec-d3">
+  <div class="wrap highlight">
+    <div class="thumb reveal"><img src="img/18354663625244801.jpg" alt="Destaque 3" loading="lazy"><div class="play"></div></div>
+    <div>
+      <div class="rank reveal">Destaque #3 · Maior alcance</div>
+      <h2 class="reveal">O post de maior alcance</h2>
+      <div class="metrics">
+        <div class="metric reveal"><div class="v count" data-count="1071">0</div><div class="k">Alcance</div></div>
+        <div class="metric reveal"><div class="v count" data-count="132">0</div><div class="k">Curtidas</div></div>
+        <div class="metric reveal"><div class="v count" data-count="12">0</div><div class="k">Comentários</div></div>
+        <div class="metric reveal"><div class="v count" data-count="1">0</div><div class="k">Salvos</div></div>
+      </div>
+      <p class="analise reveal"></p>
+      <a class="post-link reveal" href="https://www.instagram.com/reel/DZCnMcNBhn3/" target="_blank" rel="noopener">Ver no Instagram →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 7. ENGAJAMENTO -->
+<section class="sec-eng">
+  <div class="wrap">
+    <div class="eyebrow reveal">Engajamento</div>
+    <h2 class="reveal">Sua taxa média no mês</h2>
+    <div class="eng-rate reveal">
+      <span class="big-num count" data-count="10.5" data-decimals="1">0</span>
+      <small>%</small>
+    </div>
+    <div class="label reveal">Distribuição de alcance por formato</div>
+    <div class="bars reveal">
+      <div class="bar-row"><span class="bk">Reels</span><div class="bar-track"><div class="bar-fill" data-w="80"></div></div><span class="bv">80%</span></div>
+      <div class="bar-row"><span class="bk">Cards</span><div class="bar-track"><div class="bar-fill" data-w="20"></div></div><span class="bv">20%</span></div>
+      <div class="bar-row"><span class="bk">Carrosséis</span><div class="bar-track"><div class="bar-fill" data-w="0"></div></div><span class="bv">0%</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. INSIGHT -->
+<section class="sec-insight">
+  <div class="wrap">
+    <div class="eyebrow reveal">Insight do mês</div>
+    <p class="insight-body reveal"></p>
+  </div>
+</section>
+
+<!-- 9. RODAPE -->
+<footer class="sec-footer">
+  <div class="wrap">
+    <div class="footer-mark">FOR<b>STER</b></div>
+    <div class="footer-meta">Relatório gerado automaticamente · Junho 2026</div>
+    <a class="footer-link" href="https://instagram.com/fybershowpiscinas" target="_blank" rel="noopener">@fybershowpiscinas no Instagram →</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var hasGSAP = window.gsap && window.ScrollTrigger;
+  if(!hasGSAP){ document.body.classList.add('no-anim'); animateBarsFallback(); return; }
+  gsap.registerPlugin(ScrollTrigger);
+
+  // progress bar
+  gsap.to("#progress",{width:"100%",ease:"none",scrollTrigger:{trigger:"body",start:"top top",end:"bottom bottom",scrub:.3}});
+
+  // reveal por secao (stagger dos elementos .reveal dentro de cada section)
+  gsap.utils.toArray("section, footer").forEach(function(sec){
+    var items = sec.querySelectorAll(".reveal");
+    if(!items.length) return;
+    gsap.to(items,{
+      opacity:1, y:0, duration:.8, ease:"power3.out", stagger:.09,
+      scrollTrigger:{trigger:sec, start:"top 72%"}
+    });
+  });
+
+  // countup
+  gsap.utils.toArray(".count").forEach(function(el){
+    var target=parseFloat(el.getAttribute("data-count"))||0;
+    var dec=parseInt(el.getAttribute("data-decimals")||"0",10);
+    var obj={v:0};
+    ScrollTrigger.create({trigger:el,start:"top 82%",once:true,onEnter:function(){
+      gsap.to(obj,{v:target,duration:1.6,ease:"power2.out",onUpdate:function(){
+        el.textContent=fmt(obj.v,dec);
+      },onComplete:function(){el.textContent=fmt(target,dec);}});
+    }});
+  });
+
+  // barras
+  gsap.utils.toArray(".bar-fill").forEach(function(el){
+    var w=parseFloat(el.getAttribute("data-w"))||0;
+    ScrollTrigger.create({trigger:el,start:"top 88%",once:true,onEnter:function(){
+      gsap.to(el,{width:w+"%",duration:1.1,ease:"power3.out"});
+    }});
+  });
+
+  function fmt(v,dec){
+    if(dec>0) return v.toFixed(dec).replace(".",",");
+    return Math.round(v).toLocaleString("pt-BR");
+  }
+  function animateBarsFallback(){
+    document.querySelectorAll(".bar-fill").forEach(function(el){el.style.width=(el.getAttribute("data-w")||0)+"%";});
+    document.querySelectorAll(".count").forEach(function(el){
+      var dec=parseInt(el.getAttribute("data-decimals")||"0",10);
+      var t=parseFloat(el.getAttribute("data-count"))||0;
+      el.textContent = dec>0 ? t.toFixed(dec).replace(".",",") : Math.round(t).toLocaleString("pt-BR");
+    });
+  }
+})();
+</script>
+</body>
+</html>
