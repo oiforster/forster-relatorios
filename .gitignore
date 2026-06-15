@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+build.log
+dados_cache/
+_preview.html
+config.json
