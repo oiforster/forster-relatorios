@@ -26,7 +26,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 TEMPLATE = ROOT / "template" / "relatorio.html"
 LOG = ROOT / "build.log"
-GRAPH = "https://graph.facebook.com/v21.0"
+# Base da API. Canais 'instagram-standalone' (Instagram Login) usam graph.instagram.com;
+# canais via Facebook usam graph.facebook.com. Configurável por "graph_base" no config.json.
+GRAPH = "https://graph.instagram.com/v21.0"
 
 # ---------------------------------------------------------------- util / log
 def log(msg):
@@ -159,15 +161,29 @@ def buscar_insights(media_id, tipo, token):
         metrics = ["views"] + base + ["ig_reels_avg_watch_time"]
     else:
         metrics = ["views"] + base  # 'views' substitui impressions na API nova
+    def parse(data):
+        for row in data.get("data", []):
+            # Graph API v21: métricas modernas vêm em 'total_value';
+            # legadas (ex.: ig_reels_avg_watch_time) ainda usam 'values'.
+            if "total_value" in row:
+                out[row["name"]] = row["total_value"].get("value", 0)
+            else:
+                vals = row.get("values") or [{}]
+                out[row["name"]] = vals[0].get("value", 0)
+
     out = {}
     try:
-        data = http_get(f"{GRAPH}/{media_id}/insights",
-                        {"metric": ",".join(metrics), "access_token": token})
-        for row in data.get("data", []):
-            vals = row.get("values", [{}])
-            out[row["name"]] = vals[0].get("value", 0) if vals else 0
+        parse(http_get(f"{GRAPH}/{media_id}/insights",
+                       {"metric": ",".join(metrics), "access_token": token}))
     except Exception as e:
-        log(f"  insights {media_id} falhou: {e}")
+        # uma métrica inválida derruba o lote inteiro -> tenta uma a uma
+        log(f"  insights {media_id} lote falhou ({e}); tentando métrica a métrica")
+        for met in metrics:
+            try:
+                parse(http_get(f"{GRAPH}/{media_id}/insights",
+                               {"metric": met, "access_token": token}, retries=1))
+            except Exception:
+                pass
     return out
 
 def cache_thumb(post, destdir):
@@ -260,6 +276,9 @@ def main():
     args = ap.parse_args()
 
     cfg = load_config()
+    global GRAPH
+    if cfg.get("graph_base"):
+        GRAPH = cfg["graph_base"].rstrip("/")
     cred = resolve_credenciais(args.cliente, cfg)
     if not (cred["token"] and cred["ig_user_id"]):
         log("ERRO: sem credenciais Instagram (token/ig_user_id). Configure config.json.")
