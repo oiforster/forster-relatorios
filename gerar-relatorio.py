@@ -347,12 +347,23 @@ def main():
     taxas = [(r["eng"] / r["reach"] * 100) for r in registros if r["reach"]]
     taxa = round(sum(taxas) / len(taxas), 1) if taxas else 0.0
 
-    # distribuicao de alcance por formato
+    # distribuicao de alcance por formato — só mostra formatos com posts no mês
     reach_reel = sum(r["reach"] for r in registros if r["tipo"] == "reel")
     reach_card = sum(r["reach"] for r in registros if r["tipo"] == "card")
     reach_carr = sum(r["reach"] for r in registros if r["tipo"] == "carrossel")
     tot = max(reach_reel + reach_card + reach_carr, 1)
-    pct = lambda x: round(x / tot * 100)
+    formatos = [("Reels", n_reel, reach_reel), ("Cards", n_card, reach_card),
+                ("Carrosséis", n_carr, reach_carr)]
+    bar_rows = []
+    for label, n, reach in formatos:
+        if n <= 0:
+            continue
+        p = round(reach / tot * 100)
+        bar_rows.append(
+            f'      <div class="bar-row"><span class="bk">{label}</span>'
+            f'<div class="bar-track"><div class="bar-fill" data-w="{p}"></div></div>'
+            f'<span class="bv">{p}%</span></div>')
+    bars_html = "\n".join(bar_rows)
 
     # IA
     def mk(d, rank, rank_label):
@@ -393,8 +404,7 @@ def main():
         "D3_LINK": d3["permalink"] if d3 else "#", "D3_ANALISE": analises.get("D3", ""),
         # engajamento
         "TAXA_ENGAJAMENTO": taxa,
-        "BAR_REELS_PCT": pct(reach_reel), "BAR_CARDS_PCT": pct(reach_card),
-        "BAR_CARROSSEIS_PCT": pct(reach_carr),
+        "BARS": bars_html,
         # insight + rodape
         "INSIGHT_MES": analises.get("insight", ""),
         "INSTAGRAM_URL": f"https://instagram.com/{cred['handle']}",
