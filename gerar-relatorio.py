@@ -247,6 +247,42 @@ def thumb_html(rel, alt, is_reel):
     play = '<div class="play"></div>' if is_reel else ""
     return f'<img src="{rel}" alt="{alt}" loading="lazy">{play}'
 
+# rótulos das métricas exibidas nos destaques
+METRICA_LABEL = {
+    "views": "Views", "reach": "Alcance", "likes": "Curtidas",
+    "comments": "Comentários", "shares": "Compart.", "saved": "Salvos",
+    "ig_reels_avg_watch_time": "Tempo médio",
+}
+# ordem de prioridade por destaque: preserva a "personalidade" de cada card
+# (primeiro a métrica que o qualificou + as mais relevantes ao tema), mas as
+# zeradas são puladas e substituídas pela próxima que tenha valor — só expõe
+# números que jogam a favor.
+METRICA_CANDIDATAS = {
+    "D1": ["views", "reach", "likes", "ig_reels_avg_watch_time", "shares", "saved", "comments"],
+    "D2": ["likes", "comments", "shares", "saved", "reach", "views"],
+    "D3": ["reach", "likes", "comments", "saved", "shares", "views"],
+}
+
+def metric_block(d, rank, maxn=4):
+    """Monta até `maxn` métricas do destaque a partir da lista priorizada,
+    pulando as que estão zeradas/ausentes (não expõe '0')."""
+    if not d:
+        return ""
+    rows = []
+    for key in METRICA_CANDIDATAS.get(rank, []):
+        if len(rows) >= maxn:
+            break
+        raw = int(d["metrics"].get(key, 0) or 0)
+        if raw <= 0:
+            continue
+        label = METRICA_LABEL[key]
+        if key == "ig_reels_avg_watch_time":
+            val = f'<div class="v">{ms_to_label(raw)}</div>'
+        else:
+            val = f'<div class="v count" data-count="{raw}">0</div>'
+        rows.append(f'<div class="metric reveal">{val}<div class="k">{label}</div></div>')
+    return "\n        ".join(rows)
+
 def _totais_dados(path):
     try:
         d = json.loads(Path(path).read_text())
@@ -467,20 +503,17 @@ def main():
         "D1_THUMB": thumb_html(d1["thumb"] if d1 else None, "Destaque 1", True),
         "D1_THUMB_SRC": tsrc(d1), "D2_THUMB_SRC": tsrc(d2), "D3_THUMB_SRC": tsrc(d3),
         "D1_TITULO": "O Reel mais visto do mês" if d1 else "—",
-        "D1_VIEWS": g(d1, "views"), "D1_REACH": g(d1, "reach"), "D1_LIKES": g(d1, "likes"),
-        "D1_WATCH": ms_to_label(g(d1, "ig_reels_avg_watch_time")),
+        "D1_METRICS": metric_block(d1, "D1"),
         "D1_LINK": d1["permalink"] if d1 else "#", "D1_ANALISE": analises.get("D1", ""),
         # D2
         "D2_THUMB": thumb_html(d2["thumb"] if d2 else None, "Destaque 2", d2 and d2["tipo"] == "reel"),
         "D2_TITULO": "O post que mais engajou" if d2 else "—",
-        "D2_LIKES": g(d2, "likes"), "D2_COMMENTS": g(d2, "comments"),
-        "D2_SHARES": g(d2, "shares"), "D2_SAVED": g(d2, "saved"),
+        "D2_METRICS": metric_block(d2, "D2"),
         "D2_LINK": d2["permalink"] if d2 else "#", "D2_ANALISE": analises.get("D2", ""),
         # D3
         "D3_THUMB": thumb_html(d3["thumb"] if d3 else None, "Destaque 3", d3 and d3["tipo"] == "reel"),
         "D3_TITULO": "O post de maior alcance" if d3 else "—",
-        "D3_REACH": g(d3, "reach"), "D3_LIKES": g(d3, "likes"),
-        "D3_COMMENTS": g(d3, "comments"), "D3_SAVED": g(d3, "saved"),
+        "D3_METRICS": metric_block(d3, "D3"),
         "D3_LINK": d3["permalink"] if d3 else "#", "D3_ANALISE": analises.get("D3", ""),
         # engajamento
         "TAXA_ENGAJAMENTO": taxa, "ENG_POR_100": eng_por_100,
