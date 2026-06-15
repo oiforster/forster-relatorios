@@ -452,6 +452,7 @@ def main():
             pass
 
     g = lambda d, k, default=0: (d["metrics"].get(k, default) if d else default)
+    tsrc = lambda d: (d["thumb"] if d and d.get("thumb") else "")
     eng_por_100 = max(1, round(taxa)) if taxa else 0
 
     # comparacao com o mes anterior (se houver snapshot dados.json)
@@ -464,6 +465,7 @@ def main():
         "REACH_TOTAL": reach_total, "VIEWS_TOTAL": views_total, "BLOCO_COMPARACAO": bloco_comp,
         # D1
         "D1_THUMB": thumb_html(d1["thumb"] if d1 else None, "Destaque 1", True),
+        "D1_THUMB_SRC": tsrc(d1), "D2_THUMB_SRC": tsrc(d2), "D3_THUMB_SRC": tsrc(d3),
         "D1_TITULO": "O Reel mais visto do mês" if d1 else "—",
         "D1_VIEWS": g(d1, "views"), "D1_REACH": g(d1, "reach"), "D1_LIKES": g(d1, "likes"),
         "D1_WATCH": ms_to_label(g(d1, "ig_reels_avg_watch_time")),

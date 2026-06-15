@@ -24,7 +24,7 @@
     font-family:var(--font); background:var(--ink); color:#fff;
     -webkit-font-smoothing:antialiased; overflow-x:hidden; line-height:1.5;
   }
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px;width:100%}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px;width:100%;position:relative;z-index:2}
 
   /* ---- secoes full-height (cada capitulo com sua cor + --accent) ---- */
   section{
@@ -40,6 +40,22 @@
   .sec-eng     {--accent:#93c5fd; background:linear-gradient(165deg,#1e40af 0%,#111c44 60%,#070b12 100%)}
   .sec-insight {--accent:#5eead4; background:radial-gradient(120% 100% at 50% 100%,#0f766e 0%,#06231f 60%,#070b12 100%)}
   .sec-footer  {--accent:#5eead4; background:#05080e; min-height:auto; padding:64px 0}
+
+  /* ---- camadas de fundo: orbs (B), grão (A), thumb borrada (C) ---- */
+  section::before{content:"";position:absolute;inset:-12%;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(38% 32% at 82% 12%, color-mix(in srgb,var(--accent) 32%,transparent) 0%, transparent 70%),
+      radial-gradient(34% 28% at 8% 86%, color-mix(in srgb,var(--accent) 20%,transparent) 0%, transparent 72%);
+    filter:blur(10px)}
+  section::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.06;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .sec-bg{position:absolute;inset:0;z-index:0;pointer-events:none;background-size:cover;background-position:center;
+    filter:blur(46px) brightness(.5) saturate(1.4);transform:scale(1.2)}
+  .sec-bg-tint{position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(125% 100% at 80% 8%, color-mix(in srgb,var(--accent) 52%,transparent) 0%, transparent 56%),
+      linear-gradient(160deg, rgba(7,11,18,.34) 0%, rgba(7,11,18,.7) 60%, rgba(7,11,18,.92) 100%)}
+  .sec-footer::before,.sec-footer::after{display:none}
 
   /* ---- tipografia ---- */
   .eyebrow{
@@ -201,6 +217,8 @@
 
 <!-- 4. DESTAQUE 1 -->
 <section class="sec-d1">
+  <div class="sec-bg" style="background-image:url('img/17949846974983099.jpg')"></div>
+  <div class="sec-bg-tint"></div>
   <div class="wrap highlight">
     <div class="thumb reveal"><img src="img/17949846974983099.jpg" alt="Destaque 1" loading="lazy"><div class="play"></div></div>
     <div>
@@ -220,6 +238,8 @@
 
 <!-- 5. DESTAQUE 2 -->
 <section class="sec-d2">
+  <div class="sec-bg" style="background-image:url('img/17875936341435569.jpg')"></div>
+  <div class="sec-bg-tint"></div>
   <div class="wrap highlight">
     <div class="thumb reveal"><img src="img/17875936341435569.jpg" alt="Destaque 2" loading="lazy"></div>
     <div>
@@ -239,6 +259,8 @@
 
 <!-- 6. DESTAQUE 3 -->
 <section class="sec-d3">
+  <div class="sec-bg" style="background-image:url('img/18095959211088102.jpg')"></div>
+  <div class="sec-bg-tint"></div>
   <div class="wrap highlight">
     <div class="thumb reveal"><img src="img/18095959211088102.jpg" alt="Destaque 3" loading="lazy"><div class="play"></div></div>
     <div>
